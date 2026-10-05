@@ -12,8 +12,8 @@ Tick each when it works. Acceptance criteria in brackets.
 - [x] `auth` and `role` middleware, `GET /users/me`, protected routes on client. [unauthenticated users redirected]
 
 ## 2. Profile and portfolio
-- [ ] Profile page view/edit with skills, experience, portfolio items, Cloudinary image upload. [changes persist]
-- [ ] Public profile page for other users.
+- [x] Profile page view/edit with skills, experience, portfolio items, Cloudinary image upload. [changes persist]
+- [x] Public profile page for other users.
 
 ## 3. Projects
 - [ ] Create project form (draft/publish) with dynamic roles list. [saved in DB]

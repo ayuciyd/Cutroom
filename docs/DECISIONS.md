@@ -42,6 +42,22 @@
 - Updated `Register.jsx` and `Login.jsx` with role selector cards (Creator, Actor, Crew), inline error feedback, and loading states.
 - Integrated `AppLayout.jsx` with active user profile initials and logout functionality.
 
-### 4. Verification
-- `npm run build` in `/client` executed with 0 errors.
-- Scratch automated auth test script verified `POST /api/auth/register` and `GET /api/users/me` returning `200 OK` and `{ success: true }`.
+---
+
+## Task 2 — Profile & Portfolio Management
+
+### 1. Server Endpoints
+- Added `PATCH /api/users/me`: Accepts updates for `name`, `headline`, `bio`, `location`, `avatarUrl`, `skills`, `experience`, `portfolio`, and `available`. Updates MongoDB document and returns updated profile.
+- Added `GET /api/users/:id`: Public endpoint retrieving profile details by user ID or `firebaseUid`.
+
+### 2. Frontend Components & Cloudinary Integration
+- Built `client/src/lib/cloudinary.js`: Handles image uploads via Cloudinary unsigned preset with fallback to local FileReader data URLs.
+- Updated `client/src/pages/Profile.jsx`:
+  - **View Mode**: Displays avatar, name, role badge, availability toggle badge, headline, bio, location, skills tags, experience list, and portfolio reels with external links.
+  - **Edit Mode**: Allows updating all fields, uploading avatar image, adding/removing skills, adding/removing film credits (experience), and adding/removing portfolio links. Saves changes to backend and updates global `useAuth` state.
+- Created `client/src/pages/PublicProfile.jsx`: Renders public profile view when navigating to `/profile/:id` or `/users/:id`.
+
+### 3. Verification & GitHub Sync
+- `npm run build` completed with 0 errors.
+- Scratch script `scratch/test_profile.js` verified `PATCH /api/users/me` and `GET /api/users/:id` returning `200 OK` and `{ success: true }`.
+- Changes committed and pushed to GitHub branch `main`.
