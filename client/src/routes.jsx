@@ -13,6 +13,7 @@ import { Projects } from './pages/Projects';
 import { ProjectDetail } from './pages/ProjectDetail';
 import { CreateProject } from './pages/CreateProject';
 import { Profile } from './pages/Profile';
+import { PublicProfile } from './pages/PublicProfile';
 
 export const AppRoutes = () => {
   return (
@@ -34,6 +35,8 @@ export const AppRoutes = () => {
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:id" element={<ProjectDetail />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:id" element={<PublicProfile />} />
+          <Route path="/users/:id" element={<PublicProfile />} />
 
           {/* Creator Only Routes */}
           <Route element={<ProtectedRoute allowedRoles={['creator']} />}>
