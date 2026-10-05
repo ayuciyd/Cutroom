@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-ink: #1E191A;
+  --color-primary: #4A1525;
+  --color-primary-hover: #3B111E;
+  --color-accent: #D9A441;
+  --color-paper: #FAF6F0;
+  --color-surface: #FFFFFF;
+  --color-mist: #E8DFD8;
+  --color-danger: #E4572E;
+  --color-success: #2E7D5B;
+  --color-badge-bg: #F4E8EB;
+}
+
+@layer base {
+  * {
+    @apply border-mist;
+  }
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: 'Inter', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Space Grotesk', 'Sora', sans-serif;
+  }
+}
+
+/* Custom scrollbar matching deep burgundy design system */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-paper);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-mist);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
