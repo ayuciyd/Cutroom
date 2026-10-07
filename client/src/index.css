@@ -3,16 +3,17 @@
 @tailwind utilities;
 
 :root {
-  --color-ink: #1E191A;
-  --color-primary: #4A1525;
-  --color-primary-hover: #3B111E;
-  --color-accent: #D9A441;
-  --color-paper: #FAF6F0;
-  --color-surface: #FFFFFF;
-  --color-mist: #E8DFD8;
+  --color-ink: #2B151A;
+  --color-primary: #5B2C35;
+  --color-primary-hover: #472129;
+  --color-accent-peach: #F2C7AB;
+  --color-paper: #FBF1EA;
+  --color-surface: #FFFAF6;
+  --color-subtle: #F7E3D4;
+  --color-mist: #E9D3C4;
+  --color-muted: #7A5B61;
   --color-danger: #E4572E;
   --color-success: #2E7D5B;
-  --color-badge-bg: #F4E8EB;
 }
 
 @layer base {
@@ -25,11 +26,11 @@
     font-family: 'Inter', sans-serif;
   }
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', 'Sora', sans-serif;
+    font-family: 'Sora', 'Space Grotesk', sans-serif;
   }
 }
 
-/* Custom scrollbar matching deep burgundy design system */
+/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
