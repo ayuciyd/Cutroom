@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
 import { 
-  Home, 
-  Compass, 
-  PlusCircle, 
+  Clapperboard, 
+  ChevronsUpDown, 
+  LayoutDashboard, 
   FolderKanban, 
-  User as UserIcon, 
-  Film, 
-  LogOut, 
-  Bell
+  Users, 
+  Inbox, 
+  CheckSquare, 
+  UserRound, 
+  CircleHelp, 
+  Settings, 
+  Plus, 
+  Search, 
+  Bell,
+  LogOut
 } from 'lucide-react';
-import { Button } from '../components/ui/button';
 import { useAuth } from '../hooks/useAuth';
 
 export const AppLayout = () => {
@@ -19,11 +24,17 @@ export const AppLayout = () => {
   const { user, logout } = useAuth();
 
   const navItems = [
-    { label: 'Home', path: '/dashboard', icon: Home },
-    { label: 'Browse', path: '/browse', icon: Compass },
-    { label: 'Create', path: '/projects/create', icon: PlusCircle },
-    { label: 'Projects', path: '/projects', icon: FolderKanban },
-    { label: 'Profile', path: '/profile', icon: UserIcon },
+    { label: 'Dashboard', path: '/dashboard', icon: LayoutDashboard },
+    { label: 'My Projects', path: '/projects', icon: FolderKanban },
+    { label: 'Discover Talent', path: '/browse', icon: Users },
+    { label: 'Applications', path: '/applications', icon: Inbox, count: 5 },
+    { label: 'Tasks', path: '/tasks', icon: CheckSquare },
+    { label: 'Profile', path: '/profile', icon: UserRound },
+  ];
+
+  const supportNav = [
+    { label: 'Help & resources', path: '/help', icon: CircleHelp },
+    { label: 'Settings', path: '/settings', icon: Settings },
   ];
 
   const isActive = (path) => {
@@ -38,49 +49,38 @@ export const AppLayout = () => {
   };
 
   const getInitials = (name) => {
-    if (!name) return 'CR';
+    if (!name) return 'MC';
     return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
   };
 
   return (
-    <div className="min-h-screen bg-paper flex flex-col md:flex-row">
-      {/* Mobile Top App Bar */}
-      <header className="md:hidden sticky top-0 z-40 bg-surface border-b border-mist px-4 py-3 flex items-center justify-between shadow-soft">
-        <Link to="/dashboard" className="flex items-center space-x-2">
-          <div className="bg-primary text-white p-1.5 rounded-md">
-            <Film className="h-5 w-5" />
-          </div>
-          <span className="font-heading font-bold text-xl text-ink">Cutroom</span>
-        </Link>
-
-        <div className="flex items-center space-x-2">
-          <button className="p-2 text-ink hover:bg-paper rounded-full min-h-[44px] min-w-[44px] flex items-center justify-center">
-            <Bell className="h-5 w-5" />
-          </button>
-          {user ? (
-            <button onClick={handleLogout} className="text-xs font-medium text-danger hover:underline p-2">
-              Logout
-            </button>
-          ) : (
-            <Link to="/login" className="text-xs font-medium text-ink hover:text-primary">
-              Sign In
-            </Link>
-          )}
-        </div>
-      </header>
-
-      {/* Desktop Sidebar (240px) */}
-      <aside className="hidden md:flex flex-col w-[240px] bg-surface border-r border-mist min-h-screen sticky top-0 h-screen p-4 justify-between z-30">
-        <div>
-          {/* Logo */}
-          <Link to="/dashboard" className="flex items-center space-x-2 px-3 py-4 mb-6">
-            <div className="bg-primary text-white p-2 rounded-lg">
-              <Film className="h-6 w-6" />
+    <div className="min-h-screen bg-page flex flex-col md:flex-row font-body text-ink">
+      {/* Desktop Sidebar (248px) */}
+      <aside className="hidden md:flex flex-col w-[248px] bg-surface border-r border-mist sticky top-0 h-screen p-6 justify-between z-30 flex-shrink-0">
+        <div className="space-y-6">
+          {/* Cutroom Logo */}
+          <Link to="/dashboard" className="flex items-center space-x-2">
+            <div className="h-9 w-9 rounded-[10px] bg-primary flex items-center justify-center text-surface">
+              <Clapperboard className="h-5 w-5" />
             </div>
-            <span className="font-heading font-bold text-2xl text-ink tracking-tight">Cutroom</span>
+            <span className="font-heading font-semibold text-[16px] text-primary">Cutroom</span>
           </Link>
 
-          {/* Navigation Links */}
+          {/* Workspace Switcher */}
+          <div className="bg-page rounded-[12px] p-4 flex items-center justify-between space-x-2 border border-mist/50">
+            <div className="flex items-center space-x-2 min-w-0">
+              <div className="h-8 w-8 rounded-[8px] bg-ink flex items-center justify-center text-surface text-[12px] font-semibold flex-shrink-0">
+                NS
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-xs font-semibold text-ink truncate leading-tight">North Star Films</p>
+                <p className="text-[11px] text-muted truncate">Independent studio</p>
+              </div>
+            </div>
+            <ChevronsUpDown className="h-3.5 w-3.5 text-ink/60 flex-shrink-0" />
+          </div>
+
+          {/* Primary Navigation */}
           <nav className="space-y-1">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -89,72 +89,109 @@ export const AppLayout = () => {
                 <Link
                   key={item.path}
                   to={item.path}
-                  className={`flex items-center space-x-3 px-3 py-2.5 rounded-md font-medium text-sm transition-colors ${
+                  className={`h-11 px-4 rounded-[12px] flex items-center justify-between text-xs font-medium transition-colors ${
                     active
-                      ? 'bg-primary/10 text-primary font-semibold'
-                      : 'text-ink/80 hover:bg-paper hover:text-ink'
+                      ? 'bg-subtle text-primary font-semibold'
+                      : 'bg-surface text-ink hover:bg-page'
                   }`}
                 >
-                  <Icon className={`h-5 w-5 ${active ? 'text-primary' : 'text-ink/60'}`} />
-                  <span>{item.label}</span>
+                  <div className="flex items-center space-x-3">
+                    <Icon className={`h-4.5 w-4.5 ${active ? 'text-primary' : 'text-ink/60'}`} />
+                    <span>{item.label}</span>
+                  </div>
+                  {item.count && (
+                    <span className="h-[22px] min-w-[22px] px-1.5 rounded-full bg-ink text-surface text-[11px] font-semibold flex items-center justify-center">
+                      {item.count}
+                    </span>
+                  )}
                 </Link>
               );
             })}
           </nav>
+
+          {/* Sidebar Support */}
+          <div className="pt-2 space-y-1">
+            {supportNav.map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className="h-11 px-4 rounded-[12px] flex items-center space-x-3 text-xs font-medium text-ink hover:bg-page transition-colors"
+                >
+                  <Icon className="h-4.5 w-4.5 text-ink/60" />
+                  <span>{item.label}</span>
+                </Link>
+              );
+            })}
+          </div>
         </div>
 
-        {/* User profile summary / Auth actions */}
-        <div className="border-t border-mist pt-4 space-y-3">
-          {user ? (
-            <>
-              <div className="flex items-center space-x-3 px-2">
-                <div className="h-9 w-9 rounded-full bg-badgeBg text-primary flex items-center justify-center font-bold text-sm border border-primary/20">
-                  {getInitials(user.name)}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-ink truncate">{user.name}</p>
-                  <p className="text-xs text-ink/60 truncate capitalize">{user.role}</p>
-                </div>
-              </div>
-              <Button variant="outline" size="sm" onClick={handleLogout} className="w-full justify-start space-x-2 text-danger hover:bg-danger/10">
-                <LogOut className="h-4 w-4" />
-                <span>Log out</span>
-              </Button>
-            </>
-          ) : (
-            <Link to="/login" className="w-full">
-              <Button variant="primary" size="sm" className="w-full">
-                Sign In
-              </Button>
-            </Link>
-          )}
+        {/* Storage Card & User Action */}
+        <div className="space-y-4">
+          <div className="bg-page border border-mist rounded-[16px] p-4 space-y-2">
+            <div className="flex items-center justify-between text-xs font-medium text-ink">
+              <span>Storage</span>
+              <span className="text-muted text-[11px]">68%</span>
+            </div>
+            <div className="h-1.5 w-full bg-mist/60 rounded-full overflow-hidden">
+              <div className="h-full bg-primary rounded-full w-[68%]" />
+            </div>
+            <p className="text-[11px] text-muted">6.8 GB of 10 GB used</p>
+          </div>
+
+          <button 
+            onClick={handleLogout}
+            className="w-full h-9 px-3 rounded-[10px] border border-mist hover:bg-page text-xs text-danger font-medium flex items-center justify-center space-x-2"
+          >
+            <LogOut className="h-3.5 w-3.5" />
+            <span>Sign out</span>
+          </button>
         </div>
       </aside>
 
-      {/* Main Content Area */}
-      <main className="flex-1 pb-20 md:pb-8 p-4 md:p-8 max-w-[1200px] mx-auto w-full">
-        <Outlet />
-      </main>
+      {/* Main Container */}
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Top Bar */}
+        <header className="h-[72px] px-8 bg-surface border-b border-mist flex items-center justify-between sticky top-0 z-20">
+          <div>
+            <h1 className="font-heading font-semibold text-xl text-ink">
+              Dashboard
+            </h1>
+            <p className="text-xs text-muted font-heading">
+              Monday, October 5
+            </p>
+          </div>
 
-      {/* Mobile Bottom Tab Bar */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-surface border-t border-mist px-2 py-1 flex items-center justify-around shadow-lg">
-        {navItems.map((item) => {
-          const Icon = item.icon;
-          const active = isActive(item.path);
-          return (
-            <Link
-              key={item.path}
-              to={item.path}
-              className={`flex flex-col items-center justify-center py-1 px-3 min-h-[44px] min-w-[44px] rounded-lg transition-colors ${
-                active ? 'text-primary font-semibold' : 'text-ink/60 hover:text-ink'
-              }`}
-            >
-              <Icon className="h-5 w-5" />
-              <span className="text-[10px] mt-0.5">{item.label}</span>
+          <div className="flex items-center space-x-4">
+            <Link to="/projects/create">
+              <button className="h-11 px-4 rounded-[10px] bg-primary text-surface hover:opacity-95 text-xs font-semibold flex items-center space-x-2">
+                <Plus className="h-4 w-4" />
+                <span>Create project</span>
+              </button>
             </Link>
-          );
-        })}
-      </nav>
+
+            <button className="h-10 w-10 rounded-[10px] border border-mist flex items-center justify-center text-ink hover:bg-page">
+              <Search className="h-4.5 w-4.5" />
+            </button>
+
+            <button className="h-10 w-10 rounded-[12px] border border-mist flex items-center justify-center text-ink hover:bg-page relative">
+              <Bell className="h-4.5 w-4.5" />
+              <span className="absolute top-[7px] right-[7px] h-2 w-2 rounded-full bg-danger border-2 border-surface"></span>
+            </button>
+
+            <div className="h-10 w-10 rounded-full bg-page text-primary flex items-center justify-center font-heading font-semibold text-xs border border-mist">
+              {getInitials(user?.name)}
+            </div>
+          </div>
+        </header>
+
+        {/* Page Body */}
+        <main className="flex-1 p-8">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 };
+
