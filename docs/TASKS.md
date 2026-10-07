@@ -16,9 +16,9 @@ Tick each when it works. Acceptance criteria in brackets.
 - [x] Public profile page for other users.
 
 ## 3. Projects
-- [ ] Create project form (draft/publish) with dynamic roles list. [saved in DB]
-- [ ] My projects list on creator dashboard.
-- [ ] Project detail page (overview, roles, team).
+- [x] Create project form (draft/publish) with dynamic roles list. [saved in DB]
+- [x] My projects list on creator dashboard.
+- [x] Project detail page (overview, roles, team).
 
 ## 4. Recruitment
 - [ ] Browse projects with search and filters. [filters work with query params]

@@ -53,11 +53,27 @@
 ### 2. Frontend Components & Cloudinary Integration
 - Built `client/src/lib/cloudinary.js`: Handles image uploads via Cloudinary unsigned preset with fallback to local FileReader data URLs.
 - Updated `client/src/pages/Profile.jsx`:
-  - **View Mode**: Displays avatar, name, role badge, availability toggle badge, headline, bio, location, skills tags, experience list, and portfolio reels with external links.
-  - **Edit Mode**: Allows updating all fields, uploading avatar image, adding/removing skills, adding/removing film credits (experience), and adding/removing portfolio links. Saves changes to backend and updates global `useAuth` state.
+  - **View Mode**: Displays avatar, name, role badge, availability toggle badge, location, headline, bio, skill tags, film credit experience list, and portfolio links.
+  - **Edit Mode**: Allows updating all fields, uploading avatar image, toggling availability status, adding/removing skills, adding/removing film credits (title, company, year, description), and adding/removing portfolio links. Saves changes to backend and updates global `useAuth` state.
 - Created `client/src/pages/PublicProfile.jsx`: Renders public profile view when navigating to `/profile/:id` or `/users/:id`.
 
+---
+
+## Task 3 — Project Management Infrastructure
+
+### 1. Database Project Model & REST Endpoints
+- Created Mongoose Project Schema (`server/src/models/Project.js`) with embedded `roleRequirementSchema` (`title`, `type` [actor/crew], `count`, `description`, `filled`) and `projectMemberSchema`.
+- Built `POST /api/projects`: Creator-only endpoint guarded by `requireRole('creator')` & Zod validation (`projectSchema`). Creates project document in MongoDB or devStore with status (`draft` / `published`).
+- Built `GET /api/projects/mine`: Creator-only endpoint returning all projects owned by the logged-in user.
+- Built `GET /api/projects/:id`: Retrieves full project details populated with owner and team members.
+- Built `PATCH /api/projects/:id`: Enables owner to edit project details, add roles, or publish a draft.
+
+### 2. Frontend Project Pages
+- Built `client/src/pages/CreateProject.jsx`: Form with title, logline, full description, genre selector, stage selector (`development`, `pre-production`, `production`, `post-production`), budget range, location, cover image upload via Cloudinary, and dynamic roles manager. Supports both "Save as Draft" and "Publish Project".
+- Updated `client/src/pages/Projects.jsx` & `client/src/pages/Dashboard.jsx`: Displays creator's projects fetched from `GET /api/projects/mine` with status filter chips, open positions count, and quick stats.
+- Built `client/src/pages/ProjectDetail.jsx`: Renders project banner, stage/genre/status badges, logline & synopsis, required roles list with seat availability (`filled` / `count`), team members list, and publish action button.
+
 ### 3. Verification & GitHub Sync
-- `npm run build` completed with 0 errors.
-- Scratch script `scratch/test_profile.js` verified `PATCH /api/users/me` and `GET /api/users/:id` returning `200 OK` and `{ success: true }`.
+- `npm run build` completed cleanly in 3.94s with 0 errors.
+- Scratch automated script `scratch/test_projects.js` verified `POST /api/projects`, `GET /api/projects/mine`, and `GET /api/projects/:id` returning `200 OK` and `{ success: true }`.
 - Changes committed and pushed to GitHub branch `main`.
