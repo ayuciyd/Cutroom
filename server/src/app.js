@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { errorHandler } from './middleware/error.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
+import projectRoutes from './routes/projects.js';
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/projects', projectRoutes);
 
 // Health Check route
 app.get('/api/health', (req, res) => {
